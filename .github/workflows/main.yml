@@ -9,6 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+          hugo-version: 'latest'
+          # extended: true
+
+    - name: Build
+      run: hugo --minify
+      
     - name: rsync deployments
       uses: burnett01/rsync-deployments@6.0.0
       with:
@@ -16,6 +29,6 @@ jobs:
         path: src/
         remote_path: /var/www/html/
         remote_host: cicero.iwani.dev
-        remote_port: 8000
-        remote_user: deploy
+        remote_port: 2222
+        remote_user: root
         remote_key: ${{ secrets.DEPLOY_KEY }}
