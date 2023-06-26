@@ -22,13 +22,14 @@ jobs:
     - name: Build
       run: hugo --minify
       
-    - name: rsync deployments
-      uses: burnett01/rsync-deployments@6.0.0
+    - name: SFTP deploy
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
-        switches: -avzr --delete
-        path: src/
-        remote_path: /var/www/html/
-        remote_host: cicero.iwani.dev
-        remote_port: 2222
-        remote_user: root
-        remote_key: ${{ secrets.DEPLOY_KEY }}
+        username: ${{ secrets.DEPLOY_USER }}
+        server: ${{ secrets.DEPLOY_SERVER }}
+        port: 2222
+        local_path: ./src/*
+        remote_path: /data
+        sftp_only: true
+        ssh_private_key: ${{ secrets.DEPLOY_KEY }}
+        
