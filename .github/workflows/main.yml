@@ -28,7 +28,7 @@ jobs:
         username: ${{ secrets.DEPLOY_USER }}
         server: ${{ secrets.DEPLOY_SERVER }}
         port: 2222
-        local_path: ./src/*
+        local_path: ./public/*
         remote_path: /data
         sftp_only: true
         ssh_private_key: ${{ secrets.DEPLOY_KEY }}
